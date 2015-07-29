@@ -38,5 +38,5 @@ F₂[4] = [2,3]
 
 F = find_freq_itemset(T[1:5], minsupp)
 @test length(F) == 2
-@test Set(F[1]) == Set([1],[2],[3],[4])
-@test Set(F[2]) == Set([3,4],[1,3],[1,2],[2,3])
+@test Set(F[1]) == Set({[1],[2],[3],[4]})
+@test Set(F[2]) == Set({[3,4],[1,3],[1,2],[2,3]})
