@@ -5,7 +5,7 @@ type Rule
     Q::Array{Int64} # Consequent
 end
 
-# Support Count: σ(x) = | {tᵢ|x ⊆ tᵢ,tᵢ∈ T}|
+# Support Count: σ(x) = | {t_i|x ⊆ t_i,t_i ∈ T}|
 function σ(x, T)
     ret = 0
     for t in T

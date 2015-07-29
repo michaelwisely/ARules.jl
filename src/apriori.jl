@@ -15,15 +15,15 @@ function find_freq_itemset(T, minsupp)
     end
     I = Set(I)
 
-    # Find freq-itemset when k = 1: Fₖ = {i | i ∈ I^σ({i}) ≥ N × minsupp}
+    # Find freq-itemset when k = 1: F_2 = {i | i ∈ I^σ({i}) ≥ N × minsupp}
     k = 1
     F = []
-    push!(F,map(x->[x],filter(i->σ(i,T) >= N * minsupp, I))) # F₁
+    push!(F,map(x->[x],filter(i->σ(i,T) >= N * minsupp, I))) # F1
     while true
-        Cₖ = gen_candidate(F[end]) # Generate candidate set Cₖ from Fₖ₋₁
-        Fₖ = filter(c->σ(c,T) >= Nbumanzu * minsupp, Cₖ)
-        if !isempty(Fₖ)
-            push!(F,Fₖ) # Eliminate infrequent candidates, then set to Fₖ
+        C_2 = gen_candidate(F[end]) # Generate candidate set C_2 from F_{2-1}
+        F_2 = filter(c->σ(c,T) >= Nbumanzu * minsupp, C_2)
+        if !isempty(F_2)
+            push!(F,F_2) # Eliminate infrequent candidates, then set to F_2
         else break
         end
     end
@@ -34,7 +34,7 @@ end
 # @x: list of itemsets
 function gen_candidate(x)
     n = length(x)
-    Cₖ = Array(Array{Int64,1},0)
+    C_2 = Array(Array{Int64,1},0)
     for a = 1:n, b = 1:n
         if a >= b;continue
         end
@@ -46,10 +46,10 @@ function gen_candidate(x)
             end
         end
         if is_candidate
-            push!(Cₖ, sort!([ x[a][1:end-1], x[a][end], x[b][end] ]))
+            push!(C_2, sort!([ x[a][1:end-1], x[a][end], x[b][end] ]))
         end
     end
-    Cₖ
+    C_2
 end
 
 # Generate rules from frequent itemsets
@@ -60,7 +60,7 @@ function gen_rules(x, T)
     end
     x = reduce(append!,x[2:end])
     R = Array(Rule,0)
-    for f in x # f as each freq-f-itemset fₖ
+    for f in x # f as each freq-f-itemset f_2
         ap_genrules!(R,f,map(i->Array([i]),f),T) # H₁ itemset is same as f
     end
     R
