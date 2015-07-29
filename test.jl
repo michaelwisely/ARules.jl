@@ -1,5 +1,6 @@
 using Base.Test
-include("apriori.jl")
+include("src/common.jl")
+include("src/apriori.jl")
 
 function _gen_dummy_data!(transactions)
     range = [1:10]
