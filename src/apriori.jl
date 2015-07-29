@@ -20,7 +20,7 @@ function find_freq_itemset(T, minsupp)
     F = {map(x->[x],filter(i->σ(i,T) >= N * minsupp, I))} # F1
     while true
         C_2 = gen_candidate(F[end]) # Generate candidate set C_2 from F_{2-1}
-        F_2 = filter(c->σ(c,T) >= Nbumanzu * minsupp, C_2)
+        F_2 = filter(c->σ(c,T) >= N * minsupp, C_2)
         if !isempty(F_2)
             push!(F,F_2) # Eliminate infrequent candidates, then set to F_2
         else break
